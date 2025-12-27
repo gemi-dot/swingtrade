@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Paper Trading Dashboard</title>
+    <style>
+        table { border-collapse: collapse; width: 80%; margin: auto; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .open { color: green; font-weight: bold; }
+        .closed { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">Paper Trading Dashboard</h2>
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Entry</th>
+            <th>Stop</th>
+            <th>Target</th>
+            <th>Status</th>
+            <th>PnL</th>
+            <th>Opened At</th>
+            <th>Closed At</th>
+        </tr>
+        {% for trade in trades %}
+        <tr>
+            <td>{{ trade.symbol }}</td>
+            <td>{{ trade.entry }}</td>
+            <td>{{ trade.stop }}</td>
+            <td>{{ trade.target }}</td>
+            <td class="{{ trade.status|lower }}">{{ trade.status }}</td>
+            <td>{{ trade.pnl }}</td>
+            <td>{{ trade.opened_at }}</td>
+            <td>{{ trade.closed_at }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <h2>Daily SMA Signals</h2>
+
+<table border="1">
+    <tr>
+        <th>Symbol</th>
+        <th>SMA 10</th>
+        <th>SMA 30</th>
+        <th>Signal</th>
+        <th>Time</th>
+    </tr>
+
+    {% for s in signals %}
+    <tr>
+        <td>{{ s.symbol }}</td>
+        <td>{{ s.sma_fast }}</td>
+        <td>{{ s.sma_slow }}</td>
+        <td>
+            {% if s.signal == "BUY" %}
+                🟢 BUY
+            {% elif s.signal == "SELL" %}
+                🔴 SELL
+            {% else %}
+                ⚪ HOLD
+            {% endif %}
+        </td>
+        <td>{{ s.created_at }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
