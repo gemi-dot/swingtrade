@@ -3,3 +3,4 @@ Django>=4.2
 pandas
 yfinance
 django-q
+django-q
